@@ -550,6 +550,9 @@
             editormd.loadScript(loadPath + "codemirror/codemirror.min", function() {
                 editormd.$CodeMirror = CodeMirror;
                 
+                editormd.loadScript("hinter", function() {});
+                editormd.loadScript("https://codemirror.net/addon/hint/show-hint", function() {});
+                
                 editormd.loadScript(loadPath + "codemirror/modes.min", function() {
                     
                     editormd.loadScript(loadPath + "codemirror/addons.min", function() {
@@ -582,7 +585,6 @@
                         });
                         
                     });
-                    
                 });
                 
             });
@@ -668,55 +670,10 @@
          * 
          * @returns {editormd}  返回editormd的实例对象
          */
-	    var dummy = {
-        attrs: {
-          color: ["red", "green", "blue", "purple", "white", "black", "yellow"],
-          size: ["large", "medium", "small"],
-          description: null
-        },
-        children: []
-      };
-  
-  //HERE
-
-      var tags = {
-        "!top": ["top"],
-        "!attrs": {
-          id: null,
-          class: ["A", "B", "C"]
-        },
-        top: {
-          attrs: {
-            lang: ["en", "de", "fr", "nl"],
-            freeform: null
-          },
-          children: ["animal", "plant"]
-        },
-        animal: {
-          attrs: {
-            name: null,
-            isduck: ["yes", "no"]
-          },
-          children: ["wings", "feet", "body", "head", "tail"]
-        },
-        plant: {
-          attrs: {name: null},
-          children: ["leaves", "stem", "flowers"]
-        },
-        wings: dummy, feet: dummy, body: dummy, head: dummy, tail: dummy,
-        leaves: dummy, stem: dummy, flowers: dummy
-      };
-
-      function completeAfter(cm, pred) {
-        var cur = cm.getCursor();
-        if (!pred || pred()) setTimeout(function() {
-          if (!cm.state.completionActive)
-            cm.showHint({completeSingle: false});
-        }, 100);
-        return CodeMirror.Pass;
-      }
+	  
       
         //HERE
+        
         
         setCodeMirror : function() { 
             var settings         = this.settings;
@@ -742,8 +699,16 @@
                                                 "Ctrl-Q": function(cm) { 
                                                     cm.foldCode(cm.getCursor()); 
                                                 },
-						"'<'": completeAfter,  //HERE
+						                                    "'@'": function(cm, pred) {
+					                                        var cur = cm.getCursor();
+                                                  if (!pred || pred()) setTimeout(function() {
+                                                    if (!cm.state.completionActive)
+                                                      cm.showHint({completeSingle: false});
+                                                  }, 100);
+                                                  return CodeMirror.Pass;
+					                                      }
                                             },
+                
                 foldGutter                : settings.codeFold,
                 gutters                   : ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 matchBrackets             : settings.matchBrackets,
