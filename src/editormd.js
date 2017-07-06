@@ -550,8 +550,8 @@
             editormd.loadScript(loadPath + "codemirror/codemirror.min", function() {
                 editormd.$CodeMirror = CodeMirror;
                 
-                editormd.loadScript("hinter", function() {});
-                editormd.loadScript("https://codemirror.net/addon/hint/show-hint", function() {});
+                editormd.loadScript(loadPath + "hinter", function() {});
+                editormd.loadScript(loadPath + "show-hint", function() {});
                 
                 editormd.loadScript(loadPath + "codemirror/modes.min", function() {
                     
@@ -705,6 +705,7 @@
                                                     if (!cm.state.completionActive)
                                                       cm.showHint({completeSingle: false});
                                                   }, 100);
+                                
                                                   return CodeMirror.Pass;
 					                                      }
                                             },
