@@ -550,8 +550,8 @@
             editormd.loadScript(loadPath + "codemirror/codemirror.min", function() {
                 editormd.$CodeMirror = CodeMirror;
                 
-                editormd.loadScript(loadPath + "hinter", function() {});
-                editormd.loadScript(loadPath + "show-hint", function() {});
+                editormd.loadScript(loadPath + "custom/hinter", function() {});
+                editormd.loadScript(loadPath + "custom/show-hint", function() {});
                 
                 editormd.loadScript(loadPath + "codemirror/modes.min", function() {
                     
