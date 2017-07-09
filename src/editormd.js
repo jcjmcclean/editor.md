@@ -672,6 +672,17 @@
          */
 	  
       
+          previewEnable: function() {
+            var editor   = this.editor;
+            this.watch();
+            this.previewing();
+          },
+          
+          previewDisable: function() {
+            var editor   = this.editor;
+            this.unwatch();
+            this.previewed();
+          },
         //HERE
         
         
@@ -2474,7 +2485,7 @@
          * @returns {editormd}         返回editormd的实例对象
          */
         
-        previewing : function() {
+        previewing : function() {;
             
             var _this            = this;
             var editor           = this.editor;
@@ -2489,11 +2500,11 @@
             }
             
             if (settings.toolbar && toolbar) {
-                toolbar.toggle();
+                toolbar.hide();
                 toolbar.find(".fa[name=preview]").toggleClass("active");
             }
             
-            codeMirror.toggle();
+            codeMirror.hide();
             
             var escHandle = function(event) {
                 if (event.shiftKey && event.keyCode === 27) {
@@ -2537,11 +2548,6 @@
                 }
 
                 $(window).bind("keyup", escHandle);
-            } 
-            else 
-            {
-                $(window).unbind("keyup", escHandle);
-                this.previewed();
             }
         },
         
