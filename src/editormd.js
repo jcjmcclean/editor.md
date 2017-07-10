@@ -2596,6 +2596,10 @@
                 height     : (settings.autoHeight && !this.state.fullscreen) ? "auto" : editor.height() - toolbar.height(),
                 top        : (settings.toolbar)    ? toolbar.height() : 0
             });
+            
+            preview.hide();
+            this.codeMirror.css("border-right", "none").width(this.editor.width());
+            this.resize();
 
             if (this.state.loaded)
             {
