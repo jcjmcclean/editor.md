@@ -674,13 +674,15 @@
       
           previewEnable: function() {
             var editor   = this.editor;
+            editor.addClass('preiewing');
             this.watch();
             this.previewing();
           },
           
           previewDisable: function() {
             var editor   = this.editor;
-            this.unwatch();
+            editor.removeClass('preiewing');
+            this.watch();
             this.previewed();
           },
         //HERE
@@ -1783,7 +1785,6 @@
             }
             
             cm.on("change", function(_cm, changeObj) {
-                
                 if (settings.watch)
                 {
                     _this.previewContainer.css("padding", settings.autoHeight ? "20px 20px 50px 40px" : "20px");
@@ -2388,18 +2389,20 @@
                 icon.removeClass(unWatchIcon).addClass(watchIcon);
             }
             
-            this.codeMirror.css("border-right", "1px solid #ddd").width(this.editor.width() / 2); 
+            if(this.codeMirror) {
+              this.codeMirror.css("border-right", "1px solid #ddd").width(this.editor.width() / 2); 
+              
+              timer = 0;
             
-            timer = 0;
-            
-            this.save().resize();
-            
-            if (!settings.onwatch)
-            {
-                settings.onwatch = callback || function() {};
+              this.save().resize();
+              
+              if (!settings.onwatch)
+              {
+                  settings.onwatch = callback || function() {};
+              }
+              
+              $.proxy(settings.onwatch, this)();
             }
-            
-            $.proxy(settings.onwatch, this)();
             
             return this;
         },
