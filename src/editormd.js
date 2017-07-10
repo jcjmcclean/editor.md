@@ -2488,7 +2488,7 @@
          * @returns {editormd}         返回editormd的实例对象
          */
         
-        previewing : function() {;
+        previewing : function() {
             
             var _this            = this;
             var editor           = this.editor;
